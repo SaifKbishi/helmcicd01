@@ -13,8 +13,18 @@ helm repo update
 helm search repo saifkbishi
 ```
 
-To install:
+Pull the chart:
+```bash
+helm pull saifkbishi/helmcicdtest01 --untar
+```
+
+Template rendering test (no cluster needed):
+```bash
+helm template test-release myrepo/helmcicdtest01
+```
+
+Install test (requires Kubernetes cluster):
 
 ```bash
-helm install myapp saifkbishi/helmcicd01
+helm install test-release myrepo/helmcicdtest01
 ```
