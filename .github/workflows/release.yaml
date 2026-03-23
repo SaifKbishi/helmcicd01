@@ -1,0 +1,52 @@
+name: Release Helm Chart
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'helmcicdtest01/**'
+      - 'Chart.yaml'
+      - 'values.yaml'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+
+      - name: Package Helm chart
+        run: |
+          helm package helmcicdtest01
+          mkdir -p packaged
+          mv *.tgz packaged/
+
+      - name: Checkout gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Copy new charts
+        run: |
+          cp packaged/*.tgz gh-pages/charts/
+
+      - name: Rebuild Helm index
+        run: |
+          helm repo index gh-pages --url https://saifkbishi.github.io/helmcicd01
+
+      - name: Commit and push chart updates
+        run: |
+          cd gh-pages
+          git config user.email "actions@github.com"
+          git config user.name "saifkbishi"
+          git add .
+          git commit -m "Update Helm chart" || echo "No changes"
+          git push origin gh-pages
