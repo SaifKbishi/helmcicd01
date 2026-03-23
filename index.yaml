@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  helmcicdtest01:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2026-03-24T00:58:12.6011916+02:00"
+    description: A demo Helm chart test for CI/CD with GitHub Actions
+    digest: c0d0198a6e8afaafac505681191c80d7ea9915894297544566a70e1cf870920c
+    name: helmcicdtest01
+    type: application
+    urls:
+    - https://saifkbishi.github.io/helmcicd01/helmcicdtest01-0.1.0.tgz
+    version: 0.1.0
+generated: "2026-03-24T00:58:12.6005995+02:00"
